@@ -82,8 +82,7 @@ end
 
 # Prints the detection to the screen. Called by all detection definitions.
 def print_error(throw, attack, ipaddress, time, payload)
-	puts "ATTACK: #{attack} FROM #{ipaddress} at TIME: (#{time}) 
-	     STATUS: (#{payload})"
+	puts "#{attack} #{ipaddress} (#{time}) (#{payload})"
 end
 
 # WEB SERVER SCAN #
@@ -102,15 +101,15 @@ def log_scan(web_log)
 		end
 		#nmap scans
 		if(line.include?("nmap" || line.includes?("NMAP")))
-		#	print_error(numIncidents, "nmap", ip[0], "HTTP", body)
+			print_error(numIncidents, "nmap", ip[0], timestamp, status)
 		end
 		#http errors
 		if(status.to_i >= 400 && status.to_i < 500)
-		#	print_error(numIncidents, "HTTP error", ip[0], "HTTP", body)
+		#	print_error(numIncidents, "http error", ip[0], timestamp, status)
 		end
 		#andddd finally, shell code
 		if(validHex(body))	
-		#	print_error(numIncidents, "Shellcode", ip[0], "HTTP", body)
+			print_error(numIncidents, "Shell", ip[0], timestamp, status)
 		end
 	end	
 end
