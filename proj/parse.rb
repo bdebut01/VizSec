@@ -95,6 +95,7 @@ def log_scan(web_log)
 		body = parts[1]
 		status = parts[2].split()[0]
 		timestamp = parts[0].split()[3]
+		timestamp = timestamp[1, 20]
 		#phpMyAdmin error
 		if(line.include?("phpMyAdmin"))
 			print_error(numIncidents, "phpMyAdmin", ip[0], timestamp, status)
