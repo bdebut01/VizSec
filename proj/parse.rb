@@ -82,7 +82,7 @@ end
 
 # Prints the detection to the screen. Called by all detection definitions.
 def print_error(throw, attack, ipaddress, time, payload)
-	puts "#{attack} #{ipaddress} (#{time}) (#{payload})"
+	puts "#{attack}, #{ipaddress}, (#{time}), (#{payload})"
 end
 
 # WEB SERVER SCAN #
