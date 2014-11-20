@@ -58,8 +58,8 @@ void mousePressed() {
 
 void delay(float time_delay)
 {
-  int time = millis();
-  while(millis() - time <= (time_delay * 1000));
+  int now = millis();
+  while(millis() - now <= (time_delay * 1000));
 }
 
 class Button {
@@ -85,17 +85,21 @@ class Button {
 
   Button drawButton() {
     pushStyle();
-    strokeWeight(2);
-    rectMode(CORNER);
 
     //Fill Mode
     color fillM = inBounds() ? HIGHLIGHTc : DEFAULTc;
     fill(fillM);
 
+    //Button
+    strokeWeight(2);
+    rectMode(CORNER);
     rect(x, y, w, h, r);
+    
+    //Text
     textAlign(LEFT,BOTTOM);
     fill(0);
     text(s1, x, y);
+
     popStyle();
     return this;
   }
