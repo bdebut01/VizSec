@@ -98,28 +98,33 @@ def log_scan(web_log)
 		parts = line.split('"')
 		ip = parts[0].split()
 		body = parts[1]
-		status = parts[2].split()[0]
+		status = parts[1].split()[0]
+		timestamp = parts[0].split()[3]
 		#nmap scans
+		if(line.include?("phpMyAdmin"))
+			numIncidents += 1
+			print_error(numIncidents, "phpMyAdmin", ip[0], "HTTP", timestamp)
+		end
 		if(line.include?("nmap" || line.includes?("NMAP")))
 			numIncidents += 1
-			print_error(numIncidents, "nmap", ip[0], "HTTP", body)
+		#	print_error(numIncidents, "nmap", ip[0], "HTTP", body)
 		end
 		#http errors
 		if(status.to_i >= 400 && status.to_i < 500)
 			numIncidents += 1
-			print_error(numIncidents, "HTTP error", ip[0], "HTTP", body)
+		#	print_error(numIncidents, "HTTP error", ip[0], "HTTP", body)
 		end
 		#andddd finally, shell code
 		if(validHex(body))	
 			numIncidents += 1
-			print_error(numIncidents, "Shellcode", ip[0], "HTTP", body)
+		#	print_error(numIncidents, "Shellcode", ip[0], "HTTP", body)
 		end
 	end	
 end
 
 
 def validHex(body)
-	if(body.start_with?("\\x") && body.match(/((\\+x+[[:graph:]]{2,}){2})/))
+	if(body.start_with?("\\x") && body.match(/((\\+x+[[:xdigit:]]+[[:ascii:]]?){2,})/))
 		return true
 	else
 		return false
@@ -151,7 +156,6 @@ DOCOPT
 	rescue Docopt::Exit => e
 		puts e.message
 	end
-		
 end
 
 main()
