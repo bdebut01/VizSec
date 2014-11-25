@@ -1,5 +1,6 @@
-String access_log = "data.csv";
+String access_log = "data8.csv";
 Table table;
+ArrayList<Incident> incident_list;
 
 /* Table Usage
 table = loadTable("mammals.csv", "header");
@@ -15,9 +16,12 @@ table = loadTable("mammals.csv", "header");
     println(name + " (" + species + ") has an ID of " + id);
 */
 
+
 void setup() { 
-	Parser parser = new Parser(access_log);
-	table = loadTable("data.csv", "header");
+	// Parser parser = new Parser(access_log);
+	table = loadTable(access_log, "header");
+  incident_list = new ArrayList<Incident>();
+  parse();
 }
 
 void draw() {}
@@ -27,7 +31,15 @@ void draw() {}
 
 
 void parse() {
-	for (int i = 0; i < table.getRowCount(); i++) {
-		//Make a list of events?
+  int i = 0;
+	for (TableRow row : table.rows()) {
+    int id = i;
+    String attack = row.getString("AttackType");
+    String ip = row.getString("IP");
+    String time_stamp = row.getString("Timestamp");
+    String status_ = row.getString("Status");
+
+
+    i++;
 	}
 }
