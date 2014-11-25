@@ -14,77 +14,7 @@ include PacketFu
 def str_to_binary(text)
 	text.each_byte.map { |b| sprintf(" 0x%02x ", b) }.join
 end
-
-def scan_stream()
-	incidentCount = 0
-	
-	cap = PacketFu::Capture.new(:start => true, :iface => 'eth0', :promisc => true)
-	cap.stream.each do |p|
-		pkt = Packet.parse p
-		protos = pkt.proto()
-		
-		#If protocol contains a TCP, check for NULL & XMAS scans
-		if(protos.include?("TCP"))
-			if(xmas_scan?(pkt))
-				incidentCount += 1
-				payload_ = str_to_binary(pkt.payload)
-				if(payload_ != nil)
-					payload_ = Base64.encode64(payload_)
-				end
-			elsif(null_scan?(pkt))
-				incidentCount += 1
-				payload = str_to_binary(pkt.payload)
-				if(payload_ != nil)
-					payload_ = Base64.encode64(payload_)
-				end
-			else
-			end
-		end
-		#Check for HTTP protocol, and look for credit card number patterns
-		if(protos.include?("IP"))	
-			if(card_attack?(pkt))
-				incidentCount += 1
-				payload_ = str_to_binary(pkt.payload)
-				payload_ = Base64.encode64(payload_)
-			end
-		end
-		
-	end
-end
-
-
-# Card Types: 
-# VISA
-# 4xxx-xxxx-xxxx-xxxx ## include variations: 4xxxxxxx... or 4xxx xxxx...
-# MASTER
-# 5xxx-xxxx-xxxx-xxxx ## include variations: 5xxxxxxx... or 4xxx xxxx...
-# DISCOVER
-# 6011-xxxx-xxxx-xxxx ## include variations: 6011xxxx... or 4xxx xxxx...
-# EXPRESS
-# 3xxx-xxxxxx-xxxxx ## include variations: 3xxxxxxxxx.... or 3xxx xxxxx
-def card_attack?(pkt)
-	pay = pkt.payload
-	return (pay.match('4\d{3}(\s|-)?\d{4}(\s|-)?\d{4}(\s|-)?\d{4}') ||
-		pay.match('5\d{3}(\s|-)?\d{4}(\s|-)?\d{4}(\s|-)?\d{4}') ||
-		pay.match('6011(\s|-)?\d{4}(\s|-)?\d{4}(\s|-)?\d{4}') ||
-		pay.match('3\d{3}(\s|=)?\d{6}(\s|-)?\d{5}'))
-end
-
-#Assumed to be called solely for TCPPackets
-def xmas_scan?(pkt)
-	return (pkt.tcp_flags.fin == 1 && pkt.tcp_flags.urg == 1 && pkt.tcp_flags.psh == 1)
-end
-
-def null_scan?(pkt)
-	return (pkt.tcp_flags.syn == 0 && pkt.tcp_flags.fin == 0 && pkt.tcp_flags.ack == 0 &&
-	       	pkt.tcp_flags.urg == 0 && pkt.tcp_flags.psh == 0 && pkt.tcp_flags.rst == 0)
-end
-
-# Prints the detection to the screen. Called by all detection definitions.
-def print_error(throw, attack, ipaddress, time, payload)
-	puts "#{attack}, #{ipaddress}, (#{time}), (#{payload})"
-end
-
+# ///////////// START OF PARSE CODE \\\\\\\\\\\\\\\\\\\ #
 # WEB SERVER SCAN #
 def log_scan(web_log)
 	file = File.open(web_log)
@@ -122,6 +52,76 @@ def validHex(body)
 	else
 		return false
 	end
+end
+
+# Prints the detection to the screen. Called by all detection definitions.
+def print_error(throw, attack, ipaddress, time, payload)
+	puts "#{attack}, #{ipaddress}, (#{time}), (#{payload})"
+end
+
+# ///////////// END OF PARSE CODE \\\\\\\\\\\\\\\\\\\ #
+def scan_stream()
+	incidentCount = 0
+	
+	cap = PacketFu::Capture.new(:start => true, :iface => 'eth0', :promisc => true)
+	cap.stream.each do |p|
+		pkt = Packet.parse p
+		protos = pkt.proto()
+		
+		#If protocol contains a TCP, check for NULL & XMAS scans
+		if(protos.include?("TCP"))
+			if(xmas_scan?(pkt))
+				incidentCount += 1
+				payload_ = str_to_binary(pkt.payload)
+				if(payload_ != nil)
+					payload_ = Base64.encode64(payload_)
+				end
+			elsif(null_scan?(pkt))
+				incidentCount += 1
+				payload = str_to_binary(pkt.payload)
+				if(payload_ != nil)
+					payload_ = Base64.encode64(payload_)
+				end
+			else
+			end
+		end
+		#Check for HTTP protocol, and look for credit card number patterns
+		if(protos.include?("IP"))	
+			if(card_attack?(pkt))
+				incidentCount += 1
+				payload_ = str_to_binary(pkt.payload)
+				payload_ = Base64.encode64(payload_)
+			end
+		end
+		
+	end
+end
+
+# Card Types: 
+# VISA
+# 4xxx-xxxx-xxxx-xxxx ## include variations: 4xxxxxxx... or 4xxx xxxx...
+# MASTER
+# 5xxx-xxxx-xxxx-xxxx ## include variations: 5xxxxxxx... or 4xxx xxxx...
+# DISCOVER
+# 6011-xxxx-xxxx-xxxx ## include variations: 6011xxxx... or 4xxx xxxx...
+# EXPRESS
+# 3xxx-xxxxxx-xxxxx ## include variations: 3xxxxxxxxx.... or 3xxx xxxxx
+def card_attack?(pkt)
+	pay = pkt.payload
+	return (pay.match('4\d{3}(\s|-)?\d{4}(\s|-)?\d{4}(\s|-)?\d{4}') ||
+		pay.match('5\d{3}(\s|-)?\d{4}(\s|-)?\d{4}(\s|-)?\d{4}') ||
+		pay.match('6011(\s|-)?\d{4}(\s|-)?\d{4}(\s|-)?\d{4}') ||
+		pay.match('3\d{3}(\s|=)?\d{6}(\s|-)?\d{5}'))
+end
+
+#Assumed to be called solely for TCPPackets
+def xmas_scan?(pkt)
+	return (pkt.tcp_flags.fin == 1 && pkt.tcp_flags.urg == 1 && pkt.tcp_flags.psh == 1)
+end
+
+def null_scan?(pkt)
+	return (pkt.tcp_flags.syn == 0 && pkt.tcp_flags.fin == 0 && pkt.tcp_flags.ack == 0 &&
+	       	pkt.tcp_flags.urg == 0 && pkt.tcp_flags.psh == 0 && pkt.tcp_flags.rst == 0)
 end
 
 def main ()
