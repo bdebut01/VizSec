@@ -1,3 +1,4 @@
+AttackType, IP, Timestamp, Status
 phpMyAdmin, 213.136.83.21, 25/Aug/2014:20:40:52, 404
 phpMyAdmin, 61.185.140.144, 26/Aug/2014:00:17:39, 404
 Shell, 216.24.72.164, 26/Aug/2014:01:50:30, 400
