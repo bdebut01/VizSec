@@ -22,6 +22,8 @@ void setup() {
 	table = loadTable(access_log, "header");
   incident_list = new ArrayList<Incident>();
   parse();
+  println("Done parsing!");
+
 }
 
 void draw() {}
@@ -39,7 +41,7 @@ void parse() {
     String time_stamp = row.getString("Timestamp");
     String status_ = row.getString("Status");
 
-
+    incident_list.add(new Incident(id, attack, ip, time_stamp, status_));
     i++;
 	}
 }

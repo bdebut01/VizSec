@@ -14,9 +14,9 @@ class Incident {
 	}
 
 	void printMe() {
-		print ("Attack type: " + type 	+ 
-			   "IP Address: "  + ip     	+ 
-			   "Time stamp: "  + time_stamp + 
+		println("Attack type: " + type 		+ " " +
+			   "IP Address: "  + ip     	+ " " +
+			   "Time stamp: "  + time_stamp + " " +
 			   "Status: " 	   + req_status);
 	}
 }
