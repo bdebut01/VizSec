@@ -32,27 +32,34 @@ def log_scan(web_log)
 		#(1) Shell code
 		if(validHex(body))	
 			print_error(numIncidents, "Shell", ip[0], timestamp, status)
-		end
+		
 		#(2) phpMyAdmin
-		if(line.include?("phpMyAdmin"))
+		elsif(line.include?("phpMyAdmin"))
 			print_error(numIncidents, "phpMyAdmin", ip[0], timestamp, status)
-		end
 
 		#(3) wp-admin
+		elsif(line.include?("wp-admin"))
+			print_error(0, "wp-admin", ip[0], timestamp, status)
 
 		#(4) else any instance of "admin"
+		elsif(line.include?("admin"))
+			print_error(0, "admin", ip[0], timestamp, status)
 
 		#(5) Directory traversal: "/etc/.."
+		elsif(line.include?("/etc/"))
+			print_error(0, "/etc/", ip[0], timestamp, status)
 
 		#(6) XSS Tags, "<script>"
+		elsif(line.include?("<script>"))
+			print_error(0, "XSS", ip[0], timestamp, status)
 
 		#(7) nmap
-		if(line.include?("nmap" || line.includes?("NMAP")))
+		elsif(line.include?("nmap" || line.includes?("NMAP")))
 			print_error(numIncidents, "nmap", ip[0], timestamp, status)
-		end
+
 		#(8) http errors
-		if(status.to_i >= 400 && status.to_i < 500)
-		#	print_error(numIncidents, "http error", ip[0], timestamp, status)
+		elsif(status.to_i >= 400 && status.to_i < 500)
+			print_error(numIncidents, "http error", ip[0], timestamp, status)
 		end
 	end	
 end
