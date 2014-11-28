@@ -28,31 +28,31 @@ void draw() {
 
 
 void parse() {
-  int i = 1;
+  int id = 0;
 	for (TableRow row : table.rows()) {
-    int id = i;
     String attack = row.getString("AttackType");
     String ip = row.getString("IP");
     String time_stamp = row.getString("Timestamp");
     String status_ = row.getString("Status");
+    
+    Incident curr = new Incident(id, attack, ip, time_stamp, status_);
 
     //Checking for duplicates here...
-    if(i == 1) incident_list.add(new Incident(id, attack, ip, time_stamp, status_));
+    //incident_list.add(curr);
+    if(id == 0) {
+      println("First");
+      incident_list.add(curr);
+      id++;
+    } 
     else {
-      Incident prevIncid = incident_list.get(i-1);
-      if (!duplicateIncident(prevIncid, attack, ip, time_stamp, status_)) {  
-        println("DUPLICATE FOUND!");
-        incident_list.add(new Incident(id, attack, ip, time_stamp, status_));
-        i++;
+      Incident prevIncid = incident_list.get(id-1);
+
+      if (!prevIncid.dupe(curr)) {
+        curr.printMe();
+        incident_list.add(curr);
+        id++;
       }
     }
     
   }
-}
-
-boolean duplicateIncident(Incident i, String type, String ip, String time_,
-                       String status_) {
-  i.printMe();
-  return (i.type == type && i.ip == ip &&
-       i.time_stamp == time_ && i.req_status == status_);
 }

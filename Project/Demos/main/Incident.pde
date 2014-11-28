@@ -19,4 +19,11 @@ class Incident {
 			   "Time stamp: "  + time_stamp + " " +
 			   "Status: " 	   + req_status);
 	}
+
+	boolean dupe(Incident j) {
+		return (this.type.equals(j.type)		&&
+				this.ip.equals(j.ip) 			&&
+				this.time_stamp.equals(j.time_stamp) &&
+				this.req_status.equals(j.req_status));
+	}
 }
