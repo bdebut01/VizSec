@@ -13,6 +13,14 @@ class Incident {
 		req_status = req_status_;
 	}
 
+	//Checks if passed incident is identical to itself.
+	boolean dupe(Incident j) {
+		return (this.type.equals(j.type)		&&
+				this.ip.equals(j.ip) 			&&
+				this.time_stamp.equals(j.time_stamp) &&
+				this.req_status.equals(j.req_status));
+	}
+
 	void printMe() {
 		println("Attack type: " + type 		+ " " +
 			   "IP Address: "  + ip     	+ " " +
@@ -20,10 +28,4 @@ class Incident {
 			   "Status: " 	   + req_status);
 	}
 
-	boolean dupe(Incident j) {
-		return (this.type.equals(j.type)		&&
-				this.ip.equals(j.ip) 			&&
-				this.time_stamp.equals(j.time_stamp) &&
-				this.req_status.equals(j.req_status));
-	}
 }
