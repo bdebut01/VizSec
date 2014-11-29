@@ -5,7 +5,7 @@ ArrayList<Incident> live_list;     //Contains solely active incidents
 
 
 
-int DEMO_START_INDEX = 4075; //this is Sept 12's first occurrence
+int DEMO_START_INDEX = 1262; //this is Sept 12's first occurrence
 
 
 void setup() { 
@@ -17,9 +17,20 @@ void setup() {
   parse();
   println("Size: " + incident_list.size());
   println("Done parsing!");
+
+  findSeptember();
 }
 
 void draw() {
   
 }
 
+void findSeptember() {
+  for(int i =0;i<incident_list.size();i++) {
+    Incident n = incident_list.get(i);
+    if(n.time_stamp.equals("09/12/2014 00:38:26")) {
+      println (i);
+      return;
+    }
+  }
+}
