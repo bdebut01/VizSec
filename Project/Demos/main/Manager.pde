@@ -11,6 +11,7 @@ class Manager {
 		attacks = new ArrayList<Attack>();
 		
 		//Initialize attack folder list
+		tab_height = .1 * h;
 		setupFolder();
 	}
 
@@ -26,19 +27,13 @@ class Manager {
 			   .incidents.add(newIncident);
 	}
 
-	
 
-	//only render an attack box if it's incident list is > 0
-	void render() {
-		setDims(width, height);
-
+	void render(float w_, float h_) {
+		setDims(w_, h_);
 		tab_height = .1 * h;
 
 		for(int i = 0; i < attacks.size(); i++) {
-			Attack curr = attacks.get(i);
-			if(curr.incidents.size() > 0) {
-				curr.render();
-			}
+			attacks.get(i).render(w, tab_height);
 		}
 	}
 
@@ -48,28 +43,28 @@ class Manager {
 		for(int i = 0; i < NUM_ATTACK_TYPES; i++) {
 			switch (i) {
 				case 0:
-					attacks.add(new Attack("Shell", w, tab_height, i));
+					attacks.add(new Attack("Shell", w, tab_height, i, x));
 					break;
 				case 1: 
-					attacks.add(new Attack("phpMyAdmin", w, tab_height, i));
+					attacks.add(new Attack("phpMyAdmin", w, tab_height, i, x));
 					break;
 				case 2: 
-					attacks.add(new Attack("wp-admin", w, tab_height, i));
+					attacks.add(new Attack("wp-admin", w, tab_height, i, x));
 					break;
 				case 3: 
-					attacks.add(new Attack("admin", w, tab_height, i));
+					attacks.add(new Attack("admin", w, tab_height, i, x));
 					break;
 				case 4: 
-					attacks.add(new Attack("/etc/", w, tab_height, i));
+					attacks.add(new Attack("/etc/", w, tab_height, i, x));
 					break;
 				case 5: 
-					attacks.add(new Attack("XSS", w, tab_height, i));
+					attacks.add(new Attack("XSS", w, tab_height, i, x));
 					break;
 				case 6: 
-					attacks.add(new Attack("nmap", w, tab_height, i));
+					attacks.add(new Attack("nmap", w, tab_height, i, x));
 					break;
 				case 7: 
-					attacks.add(new Attack("http error", w, tab_height, i));
+					attacks.add(new Attack("http error", w, tab_height, i, x));
 					break;				
 			}
 		}
