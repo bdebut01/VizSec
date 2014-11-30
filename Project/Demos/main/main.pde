@@ -59,6 +59,10 @@ void draw() {
 }
 
 
+void mouseClicked() {
+  tab_manager.click();
+}
+
 void delay(float time_delay)
 {
   int now = millis();

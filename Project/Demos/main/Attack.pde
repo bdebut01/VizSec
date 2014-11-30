@@ -8,12 +8,15 @@ class Attack {
 	color C_DEFAULT, C_HIGHLIGHT;
 	color C_INACTIVE;
 	int SPACING_LABELX = 8;
+	boolean isActive;
 
 	Attack(String label_, float w_, float h_, int severity_, float x_) {
 		label = label_; 
 		w = w_; h = h_;
 		severity = severity_;
 		x = x_;
+
+		isActive = false;
 
 		//Severity dependent variables
 		y = (severity + 1) * h; //this is gross, like super
@@ -26,6 +29,7 @@ class Attack {
 
 	Attack addIncident(Incident newIncident) {
 		incidents.add(newIncident);
+		isActive = true;
 		return this;
 	}
 
@@ -62,6 +66,12 @@ class Attack {
 	//Think I want this function to be called when label is clicked.
 	//Box will expand to include the attack's incidents and deets
 	Attack expand() {
+		println("Expand!");
+		return this;
+	}
+
+	Attack retract() {
+		println("RETRACT");
 		return this;
 	}
 

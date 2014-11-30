@@ -8,13 +8,16 @@ class Manager {
 	float flagStart;
 	boolean isFlag;
 	float FLAG_DURATION = 10;
+	int index_Expanded;
 
 	Manager(float x_, float y_, float w_, float h_) {
 		x = x_; y = y_;
 		h = h_; w = w_;
 
 		attacks = new ArrayList<Attack>();
-		
+		index_Expanded = -1;
+
+
 		//Initialize attack folder list
 		tab_height = .1 * h;
 		setupFolder();
@@ -29,7 +32,7 @@ class Manager {
 	//intone here, also some animation as well
 	void addIncident(Incident newIncident) {
 		attacks.get(indexOf(newIncident.type))
-			   .incidents.add(newIncident);
+			   .addIncident(newIncident);
 
 		alertFlag(newIncident.type);
 	}
@@ -53,6 +56,21 @@ class Manager {
 		}
 	}
 
+	void click() {
+		for(int i = 0; i < attacks.size(); i++) {
+			Attack n = attacks.get(i);
+			if(n.isActive && n.inBounds()) {
+				if(index_Expanded == -1) {
+					n.expand();
+					index_Expanded = i;
+				} else {
+					attacks.get(i).retract();
+					n.expand();
+					index_Expanded = i;
+				}	 
+			}
+		}
+	}
 
 	//Layout severity hiearchy, initial positions, etc...
 	void setupFolder() {
