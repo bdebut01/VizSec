@@ -4,6 +4,11 @@ class Manager {
 	float w, h;
 	float tab_height;
 
+	Flag flag;
+	float flagStart;
+	boolean isFlag;
+	float FLAG_DURATION = 30;
+
 	Manager(float x_, float y_, float w_, float h_) {
 		x = x_; y = y_;
 		h = h_; w = w_;
@@ -25,8 +30,15 @@ class Manager {
 	void addIncident(Incident newIncident) {
 		attacks.get(indexOf(newIncident.type))
 			   .incidents.add(newIncident);
+
+		alertFlag(newIncident.type);
 	}
 
+	void alertFlag(String label) {
+		flagStart = TIME;
+		isFlag = true;
+		flag = new Flag(label);
+	}
 
 	void render(float w_, float h_) {
 		setDims(w_, h_);
@@ -34,6 +46,10 @@ class Manager {
 
 		for(int i = 0; i < attacks.size(); i++) {
 			attacks.get(i).render(w, tab_height);
+		}
+
+		if(isFlag) {
+			flag.render();
 		}
 	}
 
@@ -84,6 +100,30 @@ class Manager {
 			println("INDEX FAIL!");
 			return 0;
 		}
+	}	
+
+	class Flag {
+		String label;
+		Flag(String label_) {
+			label = label_;
+		}
+
+		void render() {
+				int x = width - 200;
+				int y = 10;
+				pushStyle();
+				fill(250, 150, 150);
+				rect(x, y, 190, tab_height/2);
+
+				fill(0);
+				textAlign(LEFT, TOP);
+				text(("New " + label + " attack!"), x + 8, y*2);
+				popStyle();
+
+				fill(255, 255,255, 100 - (flagStart+FLAG_DURATION - TIME));
+				noStroke();
+				rect(x, y, 190, tab_height/2);
+
+		}
 	}
-	
 }

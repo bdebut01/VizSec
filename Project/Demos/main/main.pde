@@ -8,6 +8,7 @@ Manager tab_manager;
 
 int NUM_ATTACK_TYPES = 8;
 int DEMO_START_INDEX = 1262; //this is Sept 12's first occurrence
+float FREQUENCY = 200;
 
 float tabs_width;
 float tabs_height;
@@ -34,6 +35,7 @@ void setup() {
 }
 
 void draw() {
+  smooth();
   background(255);
   
 
@@ -41,7 +43,7 @@ void draw() {
   tab_manager.render(tabs_width, tabs_height);
 
   TIME++;
-  if(TIME%100 == 0) {
+  if(TIME%FREQUENCY == 0) {
     println("BAM!");
     tab_manager.addIncident(live_list.remove(0));
   }
