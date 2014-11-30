@@ -12,6 +12,8 @@ int DEMO_START_INDEX = 1262; //this is Sept 12's first occurrence
 float tabs_width;
 float tabs_height;
 
+float TIME;
+
 void setup() { 
   background(255);
   size(1000, 800);
@@ -26,11 +28,23 @@ void setup() {
 
   parse();
   println("Done parsing!");
+  for(int i = DEMO_START_INDEX; i < incident_list.size(); i++) {
+    live_list.add(incident_list.get(i));
+  }
 }
 
 void draw() {
+  background(255);
+  
+
   //should only have to call Manager.render(width * .3, height * .8) for drawing at least...
   tab_manager.render(tabs_width, tabs_height);
+
+  TIME++;
+  if(TIME%100 == 0) {
+    println("BAM!");
+    tab_manager.addIncident(live_list.remove(0));
+  }
 }
 
 

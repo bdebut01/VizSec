@@ -6,6 +6,8 @@ class Attack {
 	float x, y;
 	float w, h;
 	color C_DEFAULT, C_HIGHLIGHT;
+	color C_INACTIVE;
+	int SPACING_LABELX = 8;
 
 	Attack(String label_, float w_, float h_, int severity_, float x_) {
 		label = label_; 
@@ -17,6 +19,9 @@ class Attack {
 		y = (severity + 1) * h; //this is gross, like super
 		C_DEFAULT = color(200 - 10 * severity, 150, 150);
 		C_HIGHLIGHT = color(250 - 10 * severity, 150, 150);
+		C_INACTIVE = color(200 - 10 * severity, 150, 150, 70);
+		
+		incidents = new ArrayList<Incident>();
 	}
 
 	Attack addIncident(Incident newIncident) {
@@ -31,15 +36,18 @@ class Attack {
 		pushStyle();
 		
 		//Fill Mode
-    	color fillM = inBounds() ? C_HIGHLIGHT : C_DEFAULT;
+		color fillM;
+		if(incidents.size() > 0) //Don't color fully if no attacks detected
+    		fillM = inBounds() ? C_HIGHLIGHT : C_DEFAULT;
+    	else fillM = C_INACTIVE;
+
     	fill(fillM);
 		stroke(1);
-		//println("label: " + label + "x: "+x+ " y: "+y+ " h:" + h+" w: "+w);
 		rect(x, y, w, h);
 
 		fill(0);
 		//textAlign();
-		text(label, x, y+(h * .5));
+		text(label, x + SPACING_LABELX, y+(h * .5));
 		popStyle();
 		//label
 		//severity level
