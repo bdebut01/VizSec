@@ -9,6 +9,11 @@ class Attack {
 	color C_INACTIVE;
 	int SPACING_LABELX = 8;
 	boolean isActive;
+	boolean isClicked;
+
+	DropDown drop;
+
+	float ANIMATE_START;
 
 	Attack(String label_, float w_, float h_, int severity_, float x_) {
 		label = label_; 
@@ -17,6 +22,10 @@ class Attack {
 		x = x_;
 
 		isActive = false;
+		isClicked = false;
+		ANIMATE_START = -1;
+
+		drop = new DropDown(w+8, y+(h*.5));
 
 		//Severity dependent variables
 		y = (severity + 1) * h; //this is gross, like super
@@ -29,6 +38,7 @@ class Attack {
 
 	Attack addIncident(Incident newIncident) {
 		incidents.add(newIncident);
+
 		isActive = true;
 		return this;
 	}
@@ -55,6 +65,10 @@ class Attack {
 		popStyle();
 		//label
 		//severity level
+
+		if(isClicked) {
+			expand();
+		}
 		return this;
 	}
 	
@@ -66,12 +80,14 @@ class Attack {
 	//Think I want this function to be called when label is clicked.
 	//Box will expand to include the attack's incidents and deets
 	Attack expand() {
-		println("Expand!");
+		isClicked = true;
+		drop.render();
 		return this;
 	}
 
 	Attack retract() {
 		println("RETRACT");
+		isClicked = false;
 		return this;
 	}
 
@@ -80,4 +96,20 @@ class Attack {
 				mouseY < y + h && mouseY > y);
 	}
 
+	class DropDown {
+		float x, y;
+		DropDown(float x_, float y_) {
+			x = x_; y = y_;
+		}
+
+		void render() {
+			pushStyle();
+			fill(0);
+			for(int i = 0; i < incidents.size(); i++) {
+				Incident n = incidents.get(i);
+				text(n.ip, w+8, y + (i * 15));
+			}
+			popStyle();
+		}
+	}
 }
