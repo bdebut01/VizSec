@@ -3,10 +3,10 @@ class Attack {
 
 	String label;
 	int severity;
-	int x, y;
-	int w, h;
+	float x, y;
+	float w, h;
 
-	Attack(String label_, int w_, int h_, int severity_) {
+	Attack(String label_, float w_, float h_, int severity_) {
 		label = label_; 
 		w = w_; h = h_;
 		severity = severity_;

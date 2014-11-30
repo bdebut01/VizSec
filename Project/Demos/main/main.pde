@@ -4,7 +4,7 @@ ArrayList<Incident> incident_list; //Contains entire file of incidents
 ArrayList<Incident> live_list;     //Contains solely active incidents
 
 
-
+int NUM_ATTACK_TYPES = 8;
 int DEMO_START_INDEX = 1262; //this is Sept 12's first occurrence
 
 
