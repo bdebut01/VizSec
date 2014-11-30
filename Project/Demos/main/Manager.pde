@@ -7,7 +7,7 @@ class Manager {
 	Flag flag;
 	float flagStart;
 	boolean isFlag;
-	float FLAG_DURATION = 30;
+	float FLAG_DURATION = 10;
 
 	Manager(float x_, float y_, float w_, float h_) {
 		x = x_; y = y_;
