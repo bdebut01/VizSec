@@ -20,7 +20,7 @@ void setup() {
   incident_list = new ArrayList<Incident>();
   live_list = new ArrayList<Incident>();
 
-  tabs_width = width * .5;
+  tabs_width = width * .3;
   tabs_height = height - 20;
   tab_manager = new Manager(10.0, 10.0, tabs_width, tabs_height);
 
