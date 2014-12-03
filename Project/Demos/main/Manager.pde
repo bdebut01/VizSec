@@ -4,6 +4,10 @@ class Manager {
 	float w, h;
 	float tab_height;
 
+	Chart viz;
+	int CHART_SPACE_LEFTX = 25;
+	int CHART_SPACE_RIGHTX = 25;
+
 	Flag flag;
 	float flagStart;
 	boolean isFlag;
@@ -17,10 +21,14 @@ class Manager {
 		attacks = new ArrayList<Attack>();
 		index_Expanded = -1;
 
-
 		//Initialize attack folder list
 		tab_height = .1 * h;
 		setupFolder();
+
+		viz = new Chart(x+w+CHART_SPACE_LEFTX, tab_height, 
+					    width - w - CHART_SPACE_RIGHTX - x - 
+					    CHART_SPACE_LEFTX,
+					    tab_height*8);
 	}
 
 	void setDims(float w_, float h_) {
@@ -52,8 +60,11 @@ class Manager {
 		}
 
 		if(isFlag) {
-			flag.render();
+		//	flag.render();
 		}
+
+		viz.render();
+
 	}
 
 	void click() {

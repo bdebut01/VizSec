@@ -11,7 +11,6 @@ class Attack {
 	boolean isActive;
 	boolean isClicked;
 
-	DropDown drop;
 
 	float ANIMATE_START;
 
@@ -25,13 +24,12 @@ class Attack {
 		isClicked = false;
 		ANIMATE_START = -1;
 
-		drop = new DropDown(w+8, y+(h*.5));
 
 		//Severity dependent variables
 		y = (severity + 1) * h; //this is gross, like super
-		C_DEFAULT = color(200 - 10 * severity, 150, 150);
-		C_HIGHLIGHT = color(250 - 10 * severity, 150, 150);
-		C_INACTIVE = color(200 - 10 * severity, 150, 150, 70);
+		C_DEFAULT = colorFinder(severity_, 0);
+		C_HIGHLIGHT = colorFinder(severity_, 0);
+		C_INACTIVE = colorFinder(severity_, 1);
 		
 		incidents = new ArrayList<Incident>();
 	}
@@ -60,15 +58,12 @@ class Attack {
 		rect(x, y, w, h);
 
 		fill(0);
-		//textAlign();
 		text(label, x + SPACING_LABELX, y+(h * .5));
 		popStyle();
-		//label
-		//severity level
 
 		if(isClicked) {
 			expand();
-		}
+		}	
 		return this;
 	}
 	
@@ -81,12 +76,10 @@ class Attack {
 	//Box will expand to include the attack's incidents and deets
 	Attack expand() {
 		isClicked = true;
-		drop.render();
 		return this;
 	}
 
 	Attack retract() {
-		println("RETRACT");
 		isClicked = false;
 		return this;
 	}
@@ -96,20 +89,32 @@ class Attack {
 				mouseY < y + h && mouseY > y);
 	}
 
-	class DropDown {
-		float x, y;
-		DropDown(float x_, float y_) {
-			x = x_; y = y_;
-		}
 
-		void render() {
-			pushStyle();
-			fill(0);
-			for(int i = 0; i < incidents.size(); i++) {
-				Incident n = incidents.get(i);
-				text(n.ip, w+8, y + (i * 15));
+	color colorFinder(int sev, int mode) {
+		color answer = color(0, 0, 0);
+		if(mode == 0) {
+			switch (sev) {
+				case 0: answer = color(228,26,28); break;
+				case 1: answer = color(55,126,184); break;
+				case 2: answer = color(77,175,74); break;
+				case 3: answer = color(152,78,163); break;
+				case 4: answer = color(255,127,0); break;
+				case 5: answer = color(255,255,51); break;
+				case 6: answer = color(166,86,40); break;
+				case 7: answer = color(247,129,191); break;
 			}
-			popStyle();
+		} else {
+			switch (sev) {
+				case 0: answer = color(228,26,28,50); break;
+				case 1: answer = color(55,126,184,50); break;
+				case 2: answer = color(77,175,74,50); break;
+				case 3: answer = color(152,78,163,50); break;
+				case 4: answer = color(255,127,0,50); break;
+				case 5: answer = color(255,255,51,50); break;
+				case 6: answer = color(166,86,40,50); break;
+				case 7: answer = color(247,129,191,50); break;
+			}
 		}
+		return answer;
 	}
 }

@@ -6,7 +6,6 @@ ArrayList<Incident> live_list;     //Contains solely active incidents
 
 Manager tab_manager;
 
-
 int NUM_ATTACK_TYPES = 8;
 int DEMO_START_INDEX = 1262; //this is Sept 12's first occurrence
 float FREQUENCY = 400; //higher it is, the more infrequent
