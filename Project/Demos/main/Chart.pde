@@ -5,6 +5,8 @@ class Chart {
 	ArrayList<Bar> bars;
 
 	int TICK_HEIGHT = 10;
+	int DEFAULT_BARHEIGHT = 10;
+	int FACTOR_H = 3;
 	float iWidth; //ie intervalWidthX 
 
 	Chart(float x_, float y_, float w_, float h_) {
@@ -57,7 +59,10 @@ class Chart {
 			pushStyle();
 			rectMode(CORNERS);
 			fill(attk.fillM);
-			rect(x,y,x+w,h-20); //20 here is what to subtract by to bar height
+			int barHeight = DEFAULT_BARHEIGHT + attk.incidents.size() *
+							FACTOR_H;
+
+			rect(x,y,x+w,h-barHeight); //20 here is what to subtract by to bar height
 			popStyle();
 		}
 	}
