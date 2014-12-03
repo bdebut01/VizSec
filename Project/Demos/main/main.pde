@@ -4,6 +4,8 @@ Table table;
 ArrayList<Incident> incident_list; //Contains entire file of incidents
 ArrayList<Incident> live_list;     //Contains solely active incidents
 
+ArrayList<Attack> attacks; //global attacks list
+
 Manager tab_manager;
 
 int NUM_ATTACK_TYPES = 8;

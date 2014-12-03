@@ -1,8 +1,9 @@
 class Manager {
-	ArrayList<Attack> attacks;
 	float x, y; 
 	float w, h;
 	float tab_height;
+
+	//ArrayList<Attack> attacks; //global attacks list
 
 	Chart viz;
 	int CHART_SPACE_LEFTX = 25;
