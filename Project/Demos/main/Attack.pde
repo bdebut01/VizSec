@@ -10,7 +10,7 @@ class Attack {
 	int SPACING_LABELX = 8;
 	boolean isActive;
 	boolean isClicked;
-
+	color fillM;
 
 	float ANIMATE_START;
 
@@ -48,7 +48,6 @@ class Attack {
 		pushStyle();
 		
 		//Fill Mode
-		color fillM;
 		if(incidents.size() > 0) //Don't color fully if no attacks detected
     		fillM = inBounds() ? C_HIGHLIGHT : C_DEFAULT;
     	else fillM = C_INACTIVE;

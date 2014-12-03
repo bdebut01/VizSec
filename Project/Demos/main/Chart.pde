@@ -20,7 +20,7 @@ class Chart {
 	void render() {
 		axis();
 		for(int i = 0; i < NUM_ATTACK_TYPES; i++) {
-			bars.get(i).render();
+			bars.get(i).render(attacks.get(i));
 		}
 	}
 
@@ -48,14 +48,15 @@ class Chart {
 		float w, h;
 		int sev;
 
-		Bar(float x_, float y_, float w_, float h_, int sev) {
+		Bar(float x_, float y_, float w_, float h_) {
 			x = x_; y = y_;
 			w = w_; h = h_;
 		}
 
-		void render() {
+		void render(Attack attk) {
 			pushStyle();
 			rectMode(CORNERS);
+			fill(attk.fillM);
 			rect(x,y,x+w,h-20); //20 here is what to subtract by to bar height
 			popStyle();
 		}

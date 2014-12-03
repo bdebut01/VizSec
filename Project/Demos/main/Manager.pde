@@ -61,7 +61,7 @@ class Manager {
 		}
 
 		if(isFlag) {
-		//	flag.render();
+			flag.render();
 		}
 
 		viz.render();
@@ -139,21 +139,22 @@ class Manager {
 		}
 
 		void render() {
-				int x = width - 200;
-				int y = 10;
-				pushStyle();
-				fill(250, 150, 150);
-				rect(x, y, 190, tab_height/2);
+			pushStyle();
+			int x = width - 200;
+			int y = 10;
+			pushStyle();
+			fill(250, 150, 150);
+			rect(x, y, 190, tab_height/2);
 
-				fill(0);
-				textAlign(LEFT, TOP);
-				text(("New " + label + " attack!"), x + 8, y*2);
-				popStyle();
+			fill(0);
+			textAlign(LEFT, TOP);
+			text(("New " + label + " attack!"), x + 8, y*2);
+			popStyle();
 
-				fill(255, 255,255, 100 - (flagStart+FLAG_DURATION - TIME));
-				noStroke();
-				rect(x, y, 190, tab_height/2);
-
+			fill(255, 255,255, 100 - (flagStart+FLAG_DURATION - TIME));
+			noStroke();
+			rect(x, y, 190, tab_height/2);
+			popStyle();
 		}
 	}
 }
