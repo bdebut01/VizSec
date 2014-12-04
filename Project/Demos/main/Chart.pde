@@ -24,6 +24,9 @@ class Chart {
 		for(int i = 0; i < NUM_ATTACK_TYPES; i++) {
 			bars.get(i).render(attacks.get(i));
 		}
+		for(int i = 0; i < NUM_ATTACK_TYPES; i++) {
+			bars.get(i).hover (attacks.get(i));
+		}
 	}
 
 	void setupBars() {
@@ -66,7 +69,6 @@ class Chart {
 				rect(x,y,x+w,h-barHeight); //20 here is what to subtract by to bar height
 				popStyle();
 			}
-			hover(attk);
 		}
 
 		void hover(Attack attk) {
@@ -84,9 +86,28 @@ class Chart {
 		void renderText(float xx, float yy, Attack attk) {
 			pushStyle();
 			fill(0);
-			rect(xx, yy, 80, 40);
+			rect(xx, yy, 100, 100);
 			fill(255);
-			text(attk.label, xx, yy + 15);
+			//for(int i = 0; i < attk.incidents.size(); i++) {
+				//ip
+			// textSize(10);
+			// text(attk.label, xx, yy + 15);
+		    Incident ii = attk.incidents.get(attk.incidents.size()-1);
+			// text(ii.ip, xx, yy + 20,80,80);
+			// text(ii.time_stamp, xx, yy + 30,80,80);
+			// text(ii.req_status, xx, yy + 40,80,80);
+			String label2 = "Type: " + attk.label 			+ '\n' +
+							"IP: " 	 + ii.ip 	  			+ '\n' + 
+							"Time stamp: " + ii.time_stamp  + '\n' +
+							"Status: " + ii.req_status;
+			textSize(10);
+			text(label2, xx, yy, 100, 100);
+				//time stamp
+				//status
+			//	if(i == 9) {
+		//			break;
+			//	}
+			//}
 			popStyle();	
 		}
 
