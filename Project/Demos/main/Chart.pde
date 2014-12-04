@@ -27,7 +27,7 @@ class Chart {
 	}
 
 	void setupBars() {
-		float BAR_SPACE = iWidth/8;
+		float BAR_SPACE = iWidth/5;
 		for(int i = 0; i < NUM_ATTACK_TYPES; i++) {
 			bars.add(new Bar(x+iWidth*i + BAR_SPACE, y+h,
 							 iWidth - BAR_SPACE*2, y+h));
@@ -56,7 +56,6 @@ class Chart {
 		}
 
 		void render(Attack attk) {
-			
 			if(attk.incidents.size() > 0) {
 				pushStyle(); 
 				rectMode(CORNERS);
@@ -71,23 +70,24 @@ class Chart {
 		}
 
 		void hover(Attack attk) {
+			String label = attk.label;
 			if(inBounds()) {
 				attk.fillM = attk.C_HIGHLIGHT; //!! this only goes one direction
 				pushStyle();
 				//Hover box with Ming's details
 				fill(0);
-				rect(mouseX, mouseY, 40, 40);
+				rect(mouseX, mouseY, 80, 40);
 				fill(255);
 				text(attk.label, mouseX + 5, mouseY + 15);
 				popStyle();
 			}
-			else if(attk.fillM == attk.C_HIGHLIGHT) { //works when u write 3rd state
+			else if(attk.fillM == attk.C_HIGHLIGHT) {
 				pushStyle();
 				//Hover box with Ming's details
 				fill(0);
-				rect(x, h-barHeight, 40, 40);
+				rect(x, h-barHeight, 80, 40);
 				fill(255);
-				text(attk.label, mouseX + 5, mouseY + 15);
+				text(attk.label, x, h-barHeight+15);
 				popStyle();
 			}
 		}

@@ -8,6 +8,7 @@ class Manager {
 	Chart viz;
 	int CHART_SPACE_LEFTX = 25;
 	int CHART_SPACE_RIGHTX = 25;
+	int CHART_EXTRA = 0;
 
 	Flag flag;
 	float flagStart;
@@ -28,7 +29,7 @@ class Manager {
 
 		viz = new Chart(x+w+CHART_SPACE_LEFTX, tab_height, 
 					    width - w - CHART_SPACE_RIGHTX - x - 
-					    CHART_SPACE_LEFTX,
+					    CHART_SPACE_LEFTX - CHART_EXTRA,
 					    tab_height*8);
 	}
 

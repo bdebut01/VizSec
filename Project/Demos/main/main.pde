@@ -12,7 +12,9 @@ int NUM_ATTACK_TYPES = 8;
 int DEMO_START_INDEX = 1262; //this is Sept 12's first occurrence
 float FREQUENCY = 400; //higher it is, the more infrequent
 Random r;
-int PROB_HIGH = 100;
+int PROB_HIGH = 50;
+
+int hover_sev;
 
 float tabs_width;
 float tabs_height;
