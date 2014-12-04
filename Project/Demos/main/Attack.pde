@@ -28,7 +28,7 @@ class Attack {
 		//Severity dependent variables
 		y = (severity + 1) * h; //this is gross, like super
 		C_DEFAULT = colorFinder(severity_, 0);
-		C_HIGHLIGHT = colorFinder(severity_, 1); //make 3rd state for highlight
+		C_HIGHLIGHT = colorFinder(severity_, 2); //make 3rd state for highlight
 		C_INACTIVE = colorFinder(severity_, 1);
 		
 		incidents = new ArrayList<Incident>();
@@ -91,7 +91,7 @@ class Attack {
 
 	color colorFinder(int sev, int mode) {
 		color answer = color(0, 0, 0);
-		if(mode == 0) {
+		if(mode == 0) { //default
 			switch (sev) {
 				case 0: answer = color(228,26,28); break;
 				case 1: answer = color(55,126,184); break;
@@ -102,7 +102,7 @@ class Attack {
 				case 6: answer = color(166,86,40); break;
 				case 7: answer = color(247,129,191); break;
 			}
-		} else {
+		} else if(mode == 1) { //inactive
 			switch (sev) {
 				case 0: answer = color(228,26,28,50); break;
 				case 1: answer = color(55,126,184,50); break;
@@ -112,6 +112,17 @@ class Attack {
 				case 5: answer = color(255,255,51,50); break;
 				case 6: answer = color(166,86,40,50); break;
 				case 7: answer = color(247,129,191,50); break;
+			}
+		} else {
+			switch (sev) { //highlight
+				case 0: answer = color(248,26,28); break;
+				case 1: answer = color(55,126,204); break;
+				case 2: answer = color(77,195,74); break;
+				case 3: answer = color(162,78,173); break;
+				case 4: answer = color(255,147,0); break;
+				case 5: answer = color(255,255,71); break;
+				case 6: answer = color(186,86,40); break;
+				case 7: answer = color(255,139,191); break;
 			}
 		}
 		return answer;

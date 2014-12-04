@@ -56,7 +56,7 @@ class Chart {
 		}
 
 		void render(Attack attk) {
-			hover(attk);
+			
 			if(attk.incidents.size() > 0) {
 				pushStyle(); 
 				rectMode(CORNERS);
@@ -67,7 +67,7 @@ class Chart {
 				rect(x,y,x+w,h-barHeight); //20 here is what to subtract by to bar height
 				popStyle();
 			}
-			
+			hover(attk);
 		}
 
 		void hover(Attack attk) {
