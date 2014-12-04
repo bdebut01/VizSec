@@ -73,23 +73,21 @@ class Chart {
 			String label = attk.label;
 			if(inBounds()) {
 				attk.fillM = attk.C_HIGHLIGHT; //!! this only goes one direction
-				pushStyle();
-				//Hover box with Ming's details
-				fill(0);
-				rect(mouseX, mouseY, 80, 40);
-				fill(255);
-				text(attk.label, mouseX + 5, mouseY + 15);
-				popStyle();
+				renderText(mouseX, mouseY, attk);
 			}
-			else if(attk.fillM == attk.C_HIGHLIGHT) {
-				pushStyle();
-				//Hover box with Ming's details
-				fill(0);
-				rect(x, h-barHeight, 80, 40);
-				fill(255);
-				text(attk.label, x, h-barHeight+15);
-				popStyle();
+			else if(attk.fillM == attk.C_HIGHLIGHT) {	
+				renderText(x, h-barHeight, attk);
 			}
+		}
+
+		//Hover box with Ming's details
+		void renderText(float xx, float yy, Attack attk) {
+			pushStyle();
+			fill(0);
+			rect(xx, yy, 80, 40);
+			fill(255);
+			text(attk.label, xx, yy + 15);
+			popStyle();	
 		}
 
 		boolean inBounds() {
