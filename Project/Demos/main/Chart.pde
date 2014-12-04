@@ -56,14 +56,16 @@ class Chart {
 		}
 
 		void render(Attack attk) {
-			pushStyle();
-			rectMode(CORNERS);
-			fill(attk.fillM);
-			int barHeight = DEFAULT_BARHEIGHT + attk.incidents.size() *
-							FACTOR_H;
+			if(attk.incidents.size() > 0) {
+				pushStyle();
+				rectMode(CORNERS);
+				fill(attk.fillM);
+				int barHeight = DEFAULT_BARHEIGHT + attk.incidents.size() *
+								FACTOR_H;
 
-			rect(x,y,x+w,h-barHeight); //20 here is what to subtract by to bar height
-			popStyle();
+				rect(x,y,x+w,h-barHeight); //20 here is what to subtract by to bar height
+				popStyle();
+			}
 		}
 	}
 }

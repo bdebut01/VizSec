@@ -144,6 +144,7 @@ class Manager {
 			int y = 10;
 			pushStyle();
 			fill(250, 150, 150);
+			noStroke();
 			rect(x, y, 190, tab_height/2);
 
 			fill(0);
