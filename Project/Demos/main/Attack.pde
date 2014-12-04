@@ -28,7 +28,7 @@ class Attack {
 		//Severity dependent variables
 		y = (severity + 1) * h; //this is gross, like super
 		C_DEFAULT = colorFinder(severity_, 0);
-		C_HIGHLIGHT = colorFinder(severity_, 0);
+		C_HIGHLIGHT = colorFinder(severity_, 1); //make 3rd state for highlight
 		C_INACTIVE = colorFinder(severity_, 1);
 		
 		incidents = new ArrayList<Incident>();

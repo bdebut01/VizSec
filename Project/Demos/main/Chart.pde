@@ -48,7 +48,7 @@ class Chart {
 	class Bar {
 		float x, y; 
 		float w, h;
-		int sev;
+		int barHeight;
 
 		Bar(float x_, float y_, float w_, float h_) {
 			x = x_; y = y_;
@@ -56,16 +56,45 @@ class Chart {
 		}
 
 		void render(Attack attk) {
+			hover(attk);
 			if(attk.incidents.size() > 0) {
-				pushStyle();
+				pushStyle(); 
 				rectMode(CORNERS);
 				fill(attk.fillM);
-				int barHeight = DEFAULT_BARHEIGHT + attk.incidents.size() *
+				barHeight = DEFAULT_BARHEIGHT + attk.incidents.size() *
 								FACTOR_H;
 
 				rect(x,y,x+w,h-barHeight); //20 here is what to subtract by to bar height
 				popStyle();
 			}
+			
+		}
+
+		void hover(Attack attk) {
+			if(inBounds()) {
+				attk.fillM = attk.C_HIGHLIGHT; //!! this only goes one direction
+				pushStyle();
+				//Hover box with Ming's details
+				fill(0);
+				rect(mouseX, mouseY, 40, 40);
+				fill(255);
+				text(attk.label, mouseX + 5, mouseY + 15);
+				popStyle();
+			}
+			else if(attk.fillM == attk.C_HIGHLIGHT) { //works when u write 3rd state
+				pushStyle();
+				//Hover box with Ming's details
+				fill(0);
+				rect(x, h-barHeight, 40, 40);
+				fill(255);
+				text(attk.label, mouseX + 5, mouseY + 15);
+				popStyle();
+			}
+		}
+
+		boolean inBounds() {
+			return (mouseX < x + w && mouseX > x &&
+					mouseY > h - barHeight && mouseY < y);
 		}
 	}
 }
