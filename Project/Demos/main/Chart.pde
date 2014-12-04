@@ -7,6 +7,10 @@ class Chart {
 	int TICK_HEIGHT = 10;
 	int DEFAULT_BARHEIGHT = 10;
 	int FACTOR_H = 3;
+
+	int TEXTBOX_HEIGHT = 120;
+	int TEXTBOX_WIDTH = 100;
+	int TEXT_SPACING = 5;
 	float iWidth; //ie intervalWidthX 
 
 	Chart(float x_, float y_, float w_, float h_) {
@@ -85,29 +89,19 @@ class Chart {
 		//Hover box with Ming's details
 		void renderText(float xx, float yy, Attack attk) {
 			pushStyle();
+			fill(255,255,255,85);
+			stroke(1);
+			rect(xx, yy, TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
 			fill(0);
-			rect(xx, yy, 100, 100);
-			fill(255);
-			//for(int i = 0; i < attk.incidents.size(); i++) {
-				//ip
-			// textSize(10);
-			// text(attk.label, xx, yy + 15);
+			//just the most recent incident
 		    Incident ii = attk.incidents.get(attk.incidents.size()-1);
-			// text(ii.ip, xx, yy + 20,80,80);
-			// text(ii.time_stamp, xx, yy + 30,80,80);
-			// text(ii.req_status, xx, yy + 40,80,80);
 			String label2 = "Type: " + attk.label 			+ '\n' +
 							"IP: " 	 + ii.ip 	  			+ '\n' + 
 							"Time stamp: " + ii.time_stamp  + '\n' +
 							"Status: " + ii.req_status;
 			textSize(10);
-			text(label2, xx, yy, 100, 100);
-				//time stamp
-				//status
-			//	if(i == 9) {
-		//			break;
-			//	}
-			//}
+			text(label2, xx+TEXT_SPACING, yy+TEXT_SPACING, 
+				 TEXTBOX_WIDTH - TEXT_SPACING, TEXTBOX_HEIGHT - TEXT_SPACING);
 			popStyle();	
 		}
 
