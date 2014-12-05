@@ -17,7 +17,7 @@ float tabs_height;
 
 Minim minim; //base minim object
 AudioSample snd[]; //AudioSamples are "triggered" sounds
-boolean isSmart = true;
+boolean isSmart = false;
 float TONE_DURATION = 25; //now some jank constant related to framerate
 
 int NUM_ATTACK_TYPES = 8;
@@ -26,7 +26,7 @@ int DEMO_START_INDEX = 0; //this is Sept 12's first occurrence
 //Time simulator
 float FREQUENCY = 400; //higher it is, the more infrequent
 Random r;
-int PROB_HIGH = 80; //20 == OFTEN, 120 == SOME, 400 == RARE
+int PROB_HIGH = 400; //20 == OFTEN, 120 == SOME, 400 == RARE
 
 
 
@@ -72,9 +72,12 @@ void draw() {
   // }
 
   float probability = r.nextInt(PROB_HIGH);
-  if(probability == 0) {
+  if(TIME == PROB_HIGH*2) {
     tab_manager.addIncident(live_list.remove(0));
   }
+ /* if(probability == 0) {
+    tab_manager.addIncident(live_list.remove(0));
+  }*/
 }
 
 
