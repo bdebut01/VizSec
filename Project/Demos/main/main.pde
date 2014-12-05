@@ -17,15 +17,18 @@ float tabs_height;
 
 Minim minim; //base minim object
 AudioSample snd[]; //AudioSamples are "triggered" sounds
-
+boolean isSmart = false;
+float TONE_DURATION = 5; //now some jank constant related to framerate
 
 int NUM_ATTACK_TYPES = 8;
 int DEMO_START_INDEX = 0; //this is Sept 12's first occurrence
+
+//Time simulator
 float FREQUENCY = 400; //higher it is, the more infrequent
 Random r;
-int PROB_HIGH = 30;
+int PROB_HIGH = 35;
 
-boolean isSmart = false;
+
 
 float TIME;
 
@@ -83,10 +86,16 @@ void setupSound() {
   int extension = 340;
   for(int i = 0; i < NUM_ATTACK_TYPES; i++) {
     snd[i] = minim.loadSample("tones/" + (extension - i * 20) + ".wav");
-    //attacks.get(i).clip = minim.loadSample((extension - i * 20) + ".wav");
   }
 }
 
+void aud_stopAll() {
+  for(int i = 0; i < NUM_ATTACK_TYPES; i++) {
+    snd[i].close();
+  }
+}
+
+//Delays in seconds
 void delay(float time_delay)
 {
   int now = millis();

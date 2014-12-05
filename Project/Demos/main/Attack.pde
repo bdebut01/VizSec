@@ -48,7 +48,9 @@ class Attack {
 	}
 
 	boolean triggerStupid() {
-		println("Dumb!");
+		snd[severity].trigger();
+    	delay(TONE_DURATION);
+    	snd[severity].stop();
 		return false;
 	}
 
