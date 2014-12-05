@@ -9,7 +9,7 @@ class Attack {
 	color C_INACTIVE;
 	int SPACING_LABELX = 8;
 
-	int HTTP_TRIGGERTIME = 216000;
+	int HTTP_TRIGGERTIME = 216000; //216000 = 60 frames * 60 sec * 60 min
 
 	boolean isActive;
 	boolean isClicked;
