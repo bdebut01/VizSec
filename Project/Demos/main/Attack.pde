@@ -8,6 +8,9 @@ class Attack {
 	color C_DEFAULT, C_HIGHLIGHT;
 	color C_INACTIVE;
 	int SPACING_LABELX = 8;
+
+	int HTTP_TRIGGERTIME = 216000;
+
 	boolean isActive;
 	boolean isClicked;
 	color fillM;
@@ -46,12 +49,12 @@ class Attack {
 		//Trigger sound once
 		ANIMATE_START = TIME;
 		trigger = true;
-		snd[severity].trigger();
+		boolean trash = isSmart ? whichSmartTrigger(severity) : goSound();
 
 		return this;
 	}
 
-	boolean triggerStupid() {
+	boolean stopSound() {
 		if(trigger) {
 	    	if(ANIMATE_START + TONE_DURATION - TIME == 0) {
 	    		snd[severity].stop();
@@ -61,9 +64,16 @@ class Attack {
 		return false;
 	}
 
+	boolean goSound() {
+		snd[severity].trigger();
+		return false;
+	}
+
 	boolean triggerSmart() {
 		if(trigger) {
 			println("Smart trigger!");
+			if(ANIMATE_START + TONE_DURATION - TIME == 0)
+				whichSmartTrigger(severity);
 		}
 		return false;
 	}
@@ -91,7 +101,7 @@ class Attack {
 			expand();
 		}	
 
-		boolean trash = isSmart ? triggerSmart() : triggerStupid();
+		stopSound();
 		return this;
 	}
 	
@@ -115,6 +125,41 @@ class Attack {
 	boolean inBounds() {
 		return (mouseX < x + w && mouseX > x &&
 				mouseY < y + h && mouseY > y);
+	}
+
+	boolean whichSmartTrigger(int sev) {
+		switch (sev) {
+				case 0: //shell, trigger immedietely
+					goSound();
+					break;
+				case 1: //phpMyAdmin, every 5 occurrences
+					if(incidents.size() % 5 == 0)
+						goSound(); 
+					break;
+				case 2: //wp-admin, immediete
+					goSound(); 
+					break;
+				case 3: //admin, every 10 occurrences
+					if(incidents.size() % 10 == 0)
+						goSound();  
+					break;
+				case 4: // /etc/, immediete
+					goSound();
+					break;
+				case 5: // XSS , immediete
+					goSound(); 
+					break;
+				case 6: // nmap, every 5 occurrences
+					if(incidents.size() % 5 == 0)
+						goSound(); 
+					break;
+				case 7: //http error, every hour (like never)
+					if(TIME % HTTP_TRIGGERTIME == 0) {
+						goSound();
+					}
+					break;
+		}	
+		return false;
 	}
 
 
