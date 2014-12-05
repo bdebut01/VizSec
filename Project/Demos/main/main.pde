@@ -25,6 +25,8 @@ float FREQUENCY = 400; //higher it is, the more infrequent
 Random r;
 int PROB_HIGH = 30;
 
+boolean isSmart = false;
+
 float TIME;
 
 void setup() { 

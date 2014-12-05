@@ -12,7 +12,9 @@ class Attack {
 	boolean isClicked;
 	color fillM;
 
-	AudioSample clip; //Gets initialized in global setup
+	//Instead of a private clip, cause that pissed of Processing,
+	//the severity integer dictates which tone from the array to intonate.
+	//Therefore you'll see references to snd[severity]
 
 	float ANIMATE_START;
 
@@ -26,8 +28,6 @@ class Attack {
 		isClicked = false;
 		ANIMATE_START = -1;
 
-		//clip = new AudioSample();
-
 		//Severity dependent variables
 		y = (severity + 1) * h; //this is gross, like super
 		C_DEFAULT = colorFinder(severity_, 0);
@@ -39,9 +39,22 @@ class Attack {
 
 	Attack addIncident(Incident newIncident) {
 		incidents.add(newIncident);
-
 		isActive = true;
+
+		//Trigger sound
+		boolean trash = isSmart ? triggerSmart() : triggerStupid();
+
 		return this;
+	}
+
+	boolean triggerStupid() {
+		println("Dumb!");
+		return false;
+	}
+
+	boolean triggerSmart() {
+		println("Smart trigger!");
+		return false;
 	}
 
 	//If incidents.size() is 0, draw faded
