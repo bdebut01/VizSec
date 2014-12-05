@@ -12,6 +12,8 @@ class Attack {
 	boolean isClicked;
 	color fillM;
 
+	AudioSample clip; //Gets initialized in global setup
+
 	float ANIMATE_START;
 
 	Attack(String label_, float w_, float h_, int severity_, float x_) {
@@ -24,6 +26,7 @@ class Attack {
 		isClicked = false;
 		ANIMATE_START = -1;
 
+		//clip = new AudioSample();
 
 		//Severity dependent variables
 		y = (severity + 1) * h; //this is gross, like super

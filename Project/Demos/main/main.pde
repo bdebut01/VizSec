@@ -1,4 +1,6 @@
+import ddf.minim.*; //Minim library
 import java.util.Random;
+
 String access_log = "data8.csv";
 Table table;
 ArrayList<Incident> incident_list; //Contains entire file of incidents
@@ -8,16 +10,20 @@ ArrayList<Attack> attacks; //global attacks list
 
 Manager tab_manager;
 
+int hover_sev;
+
+float tabs_width;
+float tabs_height;
+
+Minim minim; //base minim object
+AudioSample snd[]; //AudioSamples are "triggered" sounds
+
+
 int NUM_ATTACK_TYPES = 8;
 int DEMO_START_INDEX = 0; //this is Sept 12's first occurrence
 float FREQUENCY = 400; //higher it is, the more infrequent
 Random r;
 int PROB_HIGH = 30;
-
-int hover_sev;
-
-float tabs_width;
-float tabs_height;
 
 float TIME;
 
@@ -29,14 +35,21 @@ void setup() {
   incident_list = new ArrayList<Incident>();
   live_list = new ArrayList<Incident>();
 
+  //Tab Manager
   tabs_width = width * .3;
   tabs_height = height - 20;
   tab_manager = new Manager(10.0, 10.0, tabs_width, tabs_height);
 
+  //Time simulator
   r = new Random();
 
+  //Sounds
+  minim = new Minim(this);
+  snd = new AudioSample[NUM_ATTACK_TYPES];
+  setupSound();
+
   parse();
-  println("Done parsing!");
+  //Start demo at specific time
   for(int i = DEMO_START_INDEX; i < incident_list.size(); i++) {
     live_list.add(incident_list.get(i));
   }
@@ -46,8 +59,6 @@ void draw() {
   smooth();
   background(255);
   
-
-  //should only have to call Manager.render(width * .3, height * .8) for drawing at least...
   tab_manager.render(tabs_width, tabs_height);
 
   TIME++;
@@ -64,6 +75,14 @@ void draw() {
 
 void mouseClicked() {
   tab_manager.click();
+}
+
+void setupSound() {
+  int extension = 340;
+  for(int i = 0; i < NUM_ATTACK_TYPES; i++) {
+    snd[i] = minim.loadSample("tones/" + (extension - i * 20) + ".wav");
+    //attacks.get(i).clip = minim.loadSample((extension - i * 20) + ".wav");
+  }
 }
 
 void delay(float time_delay)

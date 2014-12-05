@@ -50,8 +50,6 @@ class Chart {
 		for(int i = 1; i < NUM_ATTACK_TYPES+1; i++) {
 			line(x+iWidth*i, y+h, x+iWidth*i, y+h+TICK_HEIGHT);
 		}
-
-		//y-axis
 	}
 
 	class Bar {
