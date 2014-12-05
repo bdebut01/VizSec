@@ -16,7 +16,8 @@ class Attack {
 	//the severity integer dictates which tone from the array to intonate.
 	//Therefore you'll see references to snd[severity]
 
-	float ANIMATE_START;
+	boolean trigger;
+	int ANIMATE_START;
 
 	Attack(String label_, float w_, float h_, int severity_, float x_) {
 		label = label_; 
@@ -27,6 +28,7 @@ class Attack {
 		isActive = false;
 		isClicked = false;
 		ANIMATE_START = -1;
+		trigger = false;
 
 		//Severity dependent variables
 		y = (severity + 1) * h; //this is gross, like super
@@ -41,21 +43,28 @@ class Attack {
 		incidents.add(newIncident);
 		isActive = true;
 
-		//Trigger sound
-		boolean trash = isSmart ? triggerSmart() : triggerStupid();
+		//Trigger sound once
+		ANIMATE_START = TIME;
+		trigger = true;
+		snd[severity].trigger();
 
 		return this;
 	}
 
 	boolean triggerStupid() {
-		snd[severity].trigger();
-    	delay(TONE_DURATION);
-    	snd[severity].stop();
+		if(trigger) {
+	    	if(ANIMATE_START + TONE_DURATION - TIME == 0) {
+	    		snd[severity].stop();
+	    		trigger = false;
+	    	}
+	    }
 		return false;
 	}
 
 	boolean triggerSmart() {
-		println("Smart trigger!");
+		if(trigger) {
+			println("Smart trigger!");
+		}
 		return false;
 	}
 
@@ -81,6 +90,8 @@ class Attack {
 		if(isClicked) {
 			expand();
 		}	
+
+		boolean trash = isSmart ? triggerSmart() : triggerStupid();
 		return this;
 	}
 	
