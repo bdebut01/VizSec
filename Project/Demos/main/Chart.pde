@@ -50,12 +50,14 @@ class Chart {
 		for(int i = 1; i < NUM_ATTACK_TYPES+1; i++) {
 			line(x+iWidth*i, y+h, x+iWidth*i, y+h+TICK_HEIGHT);
 		}
+
+		//y-axis
 	}
 
 	class Bar {
 		float x, y; 
 		float w, h;
-		int barHeight;
+		float barHeight;
 
 		Bar(float x_, float y_, float w_, float h_) {
 			x = x_; y = y_;
@@ -63,14 +65,26 @@ class Chart {
 		}
 
 		void render(Attack attk) {
-			if(attk.incidents.size() > 0) {
+			int num_incidents = attk.incidents.size();
+			if(num_incidents > 0) {
 				pushStyle(); 
 				rectMode(CORNERS);
 				fill(attk.fillM);
 				barHeight = DEFAULT_BARHEIGHT + attk.incidents.size() *
 								FACTOR_H;
 
-				rect(x,y,x+w,h-barHeight); //20 here is what to subtract by to bar height
+				rect(x,y,x+w,h-barHeight);
+				fill(0);
+				textAlign(CENTER);
+				text(num_incidents, x+w/2, h-barHeight-2);
+				popStyle();
+
+			} else  {
+				//num of incidents label
+				pushStyle();
+				fill(0);
+				textAlign(CENTER);
+				text(num_incidents, x+iWidth/2-iWidth/5, y - 2);
 				popStyle();
 			}
 		}

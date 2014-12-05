@@ -9,10 +9,10 @@ ArrayList<Attack> attacks; //global attacks list
 Manager tab_manager;
 
 int NUM_ATTACK_TYPES = 8;
-int DEMO_START_INDEX = 1262; //this is Sept 12's first occurrence
+int DEMO_START_INDEX = 0; //this is Sept 12's first occurrence
 float FREQUENCY = 400; //higher it is, the more infrequent
 Random r;
-int PROB_HIGH = 50;
+int PROB_HIGH = 30;
 
 int hover_sev;
 
@@ -23,7 +23,7 @@ float TIME;
 
 void setup() { 
   background(255);
-  size(1000, 800);
+  size(1100, 800);
 	// Parser parser = new Parser(access_log);
 	table = loadTable(access_log, "header");
   incident_list = new ArrayList<Incident>();
