@@ -139,18 +139,20 @@ class Attack {
 				case 2: //wp-admin, immediete
 					goSound(); 
 					break;
-				case 3: //admin, every 10 occurrences
-					if(incidents.size() % 10 == 0)
+				case 3: //admin, every 5 occurrences
+					if(incidents.size() % 5 == 0)
 						goSound();  
 					break;
-				case 4: // /etc/, immediete
-					goSound();
-					break;
-				case 5: // XSS , immediete
-					goSound(); 
-					break;
-				case 6: // nmap, every 5 occurrences
+				case 4: // /etc/, every 5
 					if(incidents.size() % 5 == 0)
+						goSound();
+					break;
+				case 5: // XSS , every 5
+					if(incidents.size() % 5 == 0)
+						goSound(); 
+					break;
+				case 6: // nmap, every 10 occurrences
+					if(incidents.size() % 10 == 0)
 						goSound(); 
 					break;
 				case 7: //http error, every hour (like never)
